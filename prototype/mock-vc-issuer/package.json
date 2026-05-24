@@ -1,0 +1,17 @@
+{
+  "name": "mock-vc-issuer",
+  "version": "1.0.0",
+  "description": "OIDC4VCI-style mock VC issuer for the zkEHR presentation-latency experiments. Authenticates the patient by verifying their Google ID token, then signs and returns a VC bound to a subject DID. Two endpoints: Ed25519-signed W3C VC, and EdDSA-Poseidon-signed ZK-friendly credential.",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.6.0",
+    "circomlibjs": "^0.1.7",
+    "express": "^4.21.1",
+    "jose": "^5.9.6"
+  }
+}

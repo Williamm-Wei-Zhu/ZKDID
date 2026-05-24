@@ -1,0 +1,31 @@
+\begin{table}[t]
+  \centering
+  \caption{Concurrent capacity characterization. Throughput and latency vs.\
+    concurrency $C$ for two system components. Salt service: loopback load test
+    with per-IP rate limiter raised to $10^5$/min. Prover: direct HTTPS calls
+    to Mysten DevNet prover from co-located EC2 host.}
+  \label{tab:concurrent}
+  \footnotesize
+  \begin{tabular}{l rrrrr}
+    \toprule
+     & \textbf{\# req} & \textbf{Throughput} & \textbf{Latency} & \textbf{Latency} & \textbf{Latency} \\
+     & & \textbf{(rps)} & \textbf{$p_{50}$ (ms)} & \textbf{$p_{95}$ (ms)} & \textbf{$p_{99}$ (ms)} \\
+    \midrule
+  \multicolumn{6}{l}{\textit{Salt-service (loopback, 10 instances)}} \\
+    C=1 & 28,686 & 956.4 & 1.0 & 1.3 & 2.7 \\
+    C=5 & 69,153 & 2,305.3 & 2.0 & 3.7 & 6.3 \\
+    C=10 & 69,877 & 2,329.5 & 3.9 & 7.8 & 10.1 \\
+    C=25 & 69,499 & 2,317.0 & 9.9 & 15.1 & 22.3 \\
+    C=50 & 68,456 & 2,281.9 & 20.2 & 27.3 & 42.3 \\
+    C=100 & 67,381 & 2,246.7 & 43.7 & 52.0 & 94.8 \\
+  \addlinespace
+  \multicolumn{6}{l}{\textit{Mysten ZK prover (HTTPS, us-east-1 $\leftrightarrow$ us-east-1)}} \\
+    C=1 & 451 & 30.1 & 33.1 & 36.3 & 37.5 \\
+    C=2 & 943 & 63.0 & 31.4 & 34.9 & 38.0 \\
+    C=3 & 1,429 & 95.4 & 31.4 & 34.0 & 36.7 \\
+    C=5 & 1,500 & 155.2 & 31.4 & 38.2 & 46.3 \\
+    C=10 & 1,500 & 313.4 & 31.6 & 35.9 & 42.0 \\
+    C=20 & 1,500 & 611.0 & 32.3 & 38.1 & 65.7 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

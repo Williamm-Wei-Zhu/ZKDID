@@ -1,0 +1,25 @@
+\begin{table}[t]
+  \centering
+  \caption{Operation comparison (N=3, cache=all). DIDs ($n=65$),
+    VCs ($n=31$), and Access Grants ($n=31$).
+    Latency in ms; gas in MIST; storage in BCS-serialized bytes.}
+  \label{tab:op_comparison}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{l rrr rrr}
+    \toprule
+    & \multicolumn{3}{c}{\textbf{Mean}} & \multicolumn{3}{c}{\textbf{Median ($p_{50}$)}} \\
+    \cmidrule(lr){2-4} \cmidrule(lr){5-7}
+    \textbf{Metric} & \textbf{DID} & \textbf{VC} & \textbf{Access}
+                     & \textbf{DID} & \textbf{VC} & \textbf{Access} \\
+    \midrule
+  Salt derivation & 213 & 213 & 216 & 211 & 209 & 212 \\
+  ZK prover & 2612 & 2525 & 2659 & 2594 & 2536 & 2599 \\
+  Build+sign tx & 41 & 41 & 41 & 42 & 39 & 41 \\
+  Submit tx & 209 & 212 & 215 & 213 & 213 & 214 \\
+  End-to-end & 6227 & 6143 & 6364 & 6283 & 6196 & 6394 \\
+  Net gas (MIST) & 10.84M & 10.84M & 10.84M & 10.84M & 10.84M & 10.84M \\
+  Object bytes (BCS) & 1151 & 1151 & 1151 & 1151 & 1151 & 1151 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

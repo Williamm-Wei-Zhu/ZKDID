@@ -1,0 +1,32 @@
+{
+  "name": "oidc-only-baseline",
+  "version": "1.0.0",
+  "description": "OIDC-only identity-establishment latency baseline for zkEHR evaluation",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "experiment:prelogin": "./run-in-dcv.sh prelogin",
+    "experiment:prime-token": "./run-in-dcv.sh prime-token",
+    "experiment:prime": "./run-in-dcv.sh prime",
+    "experiment:full": "./run-in-dcv.sh full",
+    "experiment:reuse": "./run-in-dcv.sh reuse",
+    "experiment:all": "./run-in-dcv.sh all",
+    "playwright:install": "playwright install --with-deps chromium"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jose": "^5.9.6",
+    "playwright": "^1.49.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.17.6",
+    "typescript": "^5.6.3"
+  }
+}

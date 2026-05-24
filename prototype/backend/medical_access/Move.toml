@@ -1,0 +1,8 @@
+[package]
+name = "medical_access"
+edition = "2024"
+
+[dependencies]
+
+[environments]
+devnet = "a63d14dc"

@@ -1,0 +1,8 @@
+{
+  "institution": "Institution 1",
+  "seed": "287311631180190480659416554780786503088",
+  "port": 7000,
+  "corsOrigin": "*",
+  "verifyJwt": false,
+  "rateLimit": { "windowMs": 60000, "max": 60 }
+}

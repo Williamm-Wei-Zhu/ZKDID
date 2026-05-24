@@ -1,0 +1,9 @@
+.env
+node_modules
+dist
+data/*.json
+results/*.csv
+move/access_grant/build
+move/access_grant/Move.lock
+Pub.devnet.toml
+*.log

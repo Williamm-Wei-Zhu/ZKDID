@@ -1,0 +1,27 @@
+\begin{table}[t]
+  \centering
+  \caption{End-to-end latency breakdown, grouped by execution context
+    (browser vs. backend child). Single patient, N=3 institutions, cache=all
+    (n=65 successful runs). All values in milliseconds.}
+  \label{tab:latency_breakdown}
+  \footnotesize
+  \begin{tabular}{lrrrrr}
+    \toprule
+    \textbf{Phase} & \textbf{Mean} & \textbf{$p_{50}$} & \textbf{$p_{95}$} & \textbf{$p_{99}$} & \textbf{$\sigma$} \\
+    \midrule
+  Fetch Sui epoch & 57 & 60 & 67 & 81 & 13 \\
+  Generate eph. key+nonce & 30 & 29 & 34 & 40 & 3 \\
+  OAuth round-trip (silent) & 543 & 529 & 658 & 699 & 69 \\
+  Derive salt & 213 & 211 & 240 & 259 & 13 \\
+  Request ZK proof & 2612 & 2594 & 2739 & 2928 & 84 \\
+  POST session to bridge & 29 & 25 & 51 & 86 & 14 \\
+\addlinespace
+  JWK freshness check & 92 & 91 & 107 & 115 & 8 \\
+  Build + sign Move tx & 41 & 42 & 45 & 48 & 3 \\
+  Submit tx to Sui & 209 & 213 & 249 & 278 & 32 \\
+  Query tx effects & 14 & 14 & 17 & 31 & 5 \\
+\addlinespace
+  \textbf{End-to-end (wall-clock)} & 6227 & 6283 & 6523 & 6597 & 231 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

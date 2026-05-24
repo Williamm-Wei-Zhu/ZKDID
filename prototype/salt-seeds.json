@@ -1,0 +1,19 @@
+{
+  "saltSeeds": {
+    "Institution 1": "",
+    "Institution 2": "",
+    "Institution 3": "",
+    "Institution 4": "",
+    "Institution 5": "",
+    "Institution 6": "",
+    "Institution 7": "",
+    "Institution 8": "",
+    "Institution 9": "",
+    "Institution 10": ""
+  },
+  "selectedInstitutions": [
+    "Institution 2",
+    "Institution 3",
+    "Institution 1"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "zkehr-protocol-harness",
+  "version": "1.0.0",
+  "description": "Apples-to-apples Node.js harness for zkEHR's identity-establishment protocol (multi-authority salt + zkLogin), bypassing the React/Vite UI for fair comparison with the OIDC-only, private-key DID, and zkLogin-only baselines.",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "experiment:prelogin": "./run-in-dcv.sh prelogin",
+    "experiment:prime-consent": "./run-in-dcv.sh prime-consent",
+    "experiment:prime": "./run-in-dcv.sh prime",
+    "experiment:establish": "./run-in-dcv.sh establish",
+    "playwright:install": "playwright install --with-deps chromium"
+  },
+  "dependencies": {
+    "@mysten/sui": "^1.45.2",
+    "@noble/hashes": "^1.5.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jwt-decode": "^4.0.0",
+    "playwright": "^1.49.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.17.6",
+    "typescript": "^5.6.3"
+  }
+}

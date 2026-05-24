@@ -1,0 +1,39 @@
+# Dependencies & build artifacts
+node_modules/
+build/
+dist/
+
+# Secrets / private keys — NEVER commit
+*.pem
+*.key
+.env
+.env.local
+.env.*.local
+privateKeys.json
+keys.json
+prototype/salt-service/config.json
+prototype/frontend/src/config.json
+.zk-session.json
+dids.json
+dids_list.json
+
+# Local caches (regenerated automatically)
+.jwks-cache.json
+.sui-balance-cache.json
+.sui-gas-cache.json
+.backend-timings.json
+*.log
+
+# Editor / OS / tooling
+.DS_Store
+.playwright-mcp/
+.claude/settings.local.json
+
+# Planning docs (not part of the public artifact)
+docs/superpowers/
+
+# Git history backup created during reorg
+.git.backup-*
+
+# Large Sui CLI tarball
+*sui-testnet-*.tgz

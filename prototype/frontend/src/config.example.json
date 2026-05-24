@@ -1,0 +1,15 @@
+{
+    "URL_ZK_PROVER": "https://prover-dev.mystenlabs.com/v1",
+    "network": "https://fullnode.devnet.sui.io",
+    "Institution 1 salt seed": "<your-institution-1-salt-seed>",
+    "Institution 2 salt seed": "<your-institution-2-salt-seed>",
+    "Institution 3 salt seed": "<your-institution-3-salt-seed>",
+    "institutions": [
+        { "name": "Institution 1", "url": "http://localhost:7001" },
+        { "name": "Institution 2", "url": "http://localhost:7002" }
+    ],
+    "CLIENT_ID_GOOGLE": "<your-google-client-id>",
+    "CLIENT_ID_TWITCH": "<your-twitch-client-id>",
+    "CLIENT_SECRET_TWITCH": "<your-twitch-client-secret>",
+    "CLIENT_ID_FACEBOOK": "<your-facebook-client-id>"
+}

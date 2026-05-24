@@ -1,0 +1,11 @@
+[package]
+name = "access_grant"
+edition = "2024"
+
+[dependencies]
+
+[addresses]
+access_grant = "0x0"
+
+[environments.devnet]
+chain-id = "4fe43958"

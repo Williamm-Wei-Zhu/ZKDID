@@ -1,0 +1,16 @@
+{
+  "hospital_a": {
+    "did": "did:zkehr:hospital:hospital_A",
+    "sui_object_id": "0x9b7e9b7d24f140d04050836d44701fd2f0936177765f149b074ea2e1bcaa9552",
+    "controller_address": "0x8c955d646d79363204bff51bb0cef02303095a42541640bc571466e24cb6bb0b",
+    "sui_tx_digest": "EhzGoC1rB6cjt3EgswUaC45ez8nZZbtqcYKgBgzadvFt",
+    "created_at_iso": "2026-05-02T02:48:48.398Z"
+  },
+  "hospital_b": {
+    "did": "did:zkehr:hospital:hospital_B",
+    "sui_object_id": "0x8bb5414f3eca398b0fbf819b3f19fec18302c6799498d8eafc5b72a627f0819c",
+    "controller_address": "0x8c955d646d79363204bff51bb0cef02303095a42541640bc571466e24cb6bb0b",
+    "sui_tx_digest": "6qukjstUtPQnScmpRQGTFBe2AMANUNDrUQJCvGrzVnde",
+    "created_at_iso": "2026-05-02T02:48:50.707Z"
+  }
+}

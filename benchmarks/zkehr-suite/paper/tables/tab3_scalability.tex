@@ -1,0 +1,20 @@
+\begin{table}[t]
+  \centering
+  \caption{Scalability: salt derivation and end-to-end latency vs.\ number of
+    selected institutions. No local cache, every institution's salt fetched
+    remotely at login time.}
+  \label{tab:scalability}
+  \footnotesize
+  \begin{tabular}{rrrrrrrr}
+    \toprule
+    & & \multicolumn{3}{c}{\textbf{Salt derivation (ms)}} & \multicolumn{3}{c}{\textbf{End-to-end (ms)}} \\
+    \cmidrule(lr){3-5} \cmidrule(lr){6-8}
+    \textbf{N} & \textbf{n} & \textbf{Mean} & \textbf{$p_{50}$} & \textbf{$p_{95}$} & \textbf{Mean} & \textbf{$p_{50}$} & \textbf{$p_{95}$} \\
+    \midrule
+  1 & 30 & 24.0 & 9.0 & 12.5 & 6295 & 5809 & 8164 \\
+  3 & 121 & 31.4 & 11.0 & 16.0 & 6190 & 6080 & 7170 \\
+  5 & 30 & 36.6 & 16.0 & 24.0 & 6209 & 6100 & 7033 \\
+  10 & 30 & 70.4 & 28.0 & 32.0 & 6008 & 6086 & 6302 \\
+    \bottomrule
+  \end{tabular}
+\end{table}

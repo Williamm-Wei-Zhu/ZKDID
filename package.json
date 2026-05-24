@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "dev": "node prototype/orchestrator/bridge.mjs",
+    "search:did": "node prototype/backend/scripts/search-did.mjs",
+    "search:access": "node prototype/backend/scripts/search-access.mjs"
+  }
+}

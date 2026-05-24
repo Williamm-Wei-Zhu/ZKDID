@@ -1,0 +1,30 @@
+\begin{table}[t]
+  \centering
+  \caption{System configuration and dataset summary.}
+  \label{tab:system_config}
+  \footnotesize
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Component} & \textbf{Configuration} \\
+    \midrule
+    Load generator & AWS EC2 t3.small, us-east-1, 2 vCPU, 8\,GB RAM \\
+    OS / runtime   & Ubuntu 24.04, Node.js 20.20.2, Playwright 1.48 \\
+    Blockchain     & Sui DevNet 1.70.0 (chain id \texttt{e8118007}) \\
+    ZK prover      & Mysten \texttt{prover-dev.mystenlabs.com/v1} (us-east-1) \\
+    OIDC provider  & Google (\texttt{accounts.google.com}, silent redirect) \\
+    Salt service   & 10 pm2-managed Node 20 instances, ports 7001--7010, \\
+                   & loopback network only, 128-bit Poseidon-based derivation \\
+    \midrule
+    \multicolumn{2}{l}{\emph{Measurement volume}} \\
+    End-to-end DID/VC/Access runs & 338 successful observations \\
+    Poseidon primitive micro-benchmark & 500 call samples \\
+    Salt-service concurrent load test  & 373,052 requests \\
+    ZK prover concurrent load test     & 7,323 requests \\
+    \midrule
+    \multicolumn{2}{l}{\emph{Statistical methodology}} \\
+    Minimum batch size per condition & 30 runs \\
+    Significance test for paired comparisons & Mann--Whitney $U$ (two-tailed) \\
+    Reported statistics & mean, median ($p_{50}$), $p_{95}$, $p_{99}$, $\sigma$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}

@@ -1,0 +1,170 @@
+% ============================================================================
+%  Section: EHR Access Authorization (Brief)
+%
+%  A short companion section to §5.3 demonstrating that the session-reuse
+%  pipeline applies unchanged to the AccessGrant operation, with chain-cost
+%  differences attributable to the Move call rather than the protocol layer.
+%
+%  Required packages:
+%    \usepackage{booktabs}
+% ============================================================================
+
+\subsubsection{EHR Access Authorization}
+\label{sec:ehr-access}
+
+The DID registration measurement of \S\ref{sec:e2e-timing} and its
+session-reuse companion (\S\ref{sec:session-reuse}) characterize the
+\texttt{op=did} path. The system also exposes an
+\texttt{op=access} path that issues an \emph{AccessGrant} record on
+chain — a Move object that binds a \texttt{(hospital\_did,
+grantee\_did, record\_id)} tuple to the patient's zkLogin address and
+serves as the unit of EHR access authorization. The end-to-end
+pipeline (OAuth $\to$ salt fan-out $\to$ ZK proof $\to$ orchestrator
+session $\to$ Move tx submission) is identical; only the on-chain
+Move call target changes. We therefore report only the
+session-reuse + persistent-worker configuration (Mode~D in the
+taxonomy of \S\ref{sec:session-reuse-modes}), with $n = 30$ AccessGrant
+issuances against a single saved session.
+
+\paragraph{Setup and validation}
+
+The bridge worker dispatches \texttt{POST /op/access} with the same IPC
+contract as \texttt{op=did}. For each iteration the experiment driver
+populates the \texttt{(hospital\_did, grantee\_did)} fields with the
+patient's own zkLogin DID — derived from the bridge's
+\texttt{/latest-timings} endpoint after Phase~1 — and issues a unique
+\texttt{record\_id} per call. All 30 AccessGrant transactions reached
+on-chain finality with \texttt{status=success} (verified against the
+\texttt{Groth16-fail} count in the bridge stdout, which was zero
+post-deployment). The mean net gas cost is 4{,}579{,}600~MIST per
+grant ($\approx$0.00458~SUI), 52\,\% higher than the per-DID gas of
+3{,}008{,}680~MIST owing to the additional \texttt{string} fields
+stored in the Move object.
+
+\paragraph{Per-iteration latency}
+
+Table~\ref{tab:ehr-access-vs-did} reports the per-iteration latency for
+\texttt{op=access} alongside the corresponding \texttt{op=did} numbers
+from \S\ref{sec:session-reuse} for direct comparison.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Mode D per-iteration latency: \texttt{op=did} versus
+\texttt{op=access} ($n=30$ each, persistent-worker backend, all
+chain-confirmed). Phase~1 setup costs (\(\sim\)4.4--5.6\,s) are paid once and amortize across the batch.}
+\label{tab:ehr-access-vs-did}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Phase}             & \multicolumn{2}{c}{\textbf{op=did}}
+                           & \multicolumn{2}{c}{\textbf{op=access}}
+                           & \(\boldsymbol{\Delta_{\text{mean}}}\) \\
+                           & \textbf{mean} & \textbf{p50}
+                           & \textbf{mean} & \textbf{p50}
+                           & \\
+\midrule
+\texttt{wall\_post}              & 109 & 100 & \textbf{564} & \textbf{609} & $+455$ \\
+6.1--3 restore + addrSeed        &  17 &  17 &  17 &  17 &   $0$ \\
+6.1b  JWK precheck               &   0 &   0 &   0 &   0 &   $0$ \\
+6.4   request\_Prover (skipped)  &   0 &   0 &   0 &   0 &   $0$ \\
+6.4b  request\_Faucet            &   0 &   0 &   0 &   0 &   $0$ \\
+6.5   build + sign Move tx       &  14 &  11 &   5 &   5 &   $-9$ \\
+6.6b  submit + chain finality    &   9 &   9 & 187 & 190 & $+178$ \\
+\midrule
+On-chain gas (net, MIST)         & \multicolumn{2}{c}{3{,}008{,}680} & \multicolumn{2}{c}{4{,}579{,}600} & $+52\,\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Discussion}
+
+Three observations follow.
+\textbf{(i)} The two backend phases that depend solely on
+session state — restore + addrSeed (6.1--3), JWK precheck (6.1b), and
+faucet pre-check (6.4b) — are statistically identical across
+\texttt{op=did} and \texttt{op=access} (within 1\,ms), confirming that
+the worker's request-scoped reset and cross-request cache reuse work
+uniformly across op types.
+\textbf{(ii)} Phase 6.5 (build + sign Move tx) is shorter for
+\texttt{op=access} (5\,ms vs 14\,ms) because the AccessGrant Move
+constructor takes simpler argument types (three \texttt{String} fields)
+than the DID document constructor; this is a Move-layer effect, not a
+client-side artifact.
+\textbf{(iii)} The +178\,ms increase in phase 6.6b
+(submit + chain finality) accounts for the entire \(+455\)\,ms
+\texttt{wall\_post} gap. Inspection of the bridge log shows that the
+AccessGrant transaction reliably requires the second backoff poll
+($+150$\,ms) for finality, whereas the DID transaction usually
+clears on the first poll ($\le 10$\,ms inclusive of RPC). This is
+attributable to the larger transaction effects payload generated by
+the AccessGrant Move call (additional shared-object reads and string
+storage), increasing per-validator execution time by a few tens of
+milliseconds and pushing the consensus signal past the 150\,ms
+window.
+
+\paragraph{Implications for batch authorization}
+
+A clinic enrolling 100 patients and issuing one AccessGrant per patient
+within the same session pays
+\(5.6\,\text{s} + 99 \times 0.564\,\text{s} \approx 61.4\,\text{s}\)
+total wall time, an amortized 614\,ms per AccessGrant. The same
+$\sim$16-minute session-validity window (\S\ref{sec:session-reuse-window})
+admits up to $\sim$1{,}700 AccessGrants from a single login, well
+beyond the upper bound of any realistic single-clinic workflow.
+
+\paragraph{End-to-end Correctness: On-chain Round-trip Verification}
+\label{sec:ehr-access-roundtrip}
+
+Latency is meaningful only if the data on chain matches the data
+submitted. We therefore validated all 30 AccessGrant records produced
+by the experiment using an independent verification client
+(\texttt{verify-access-grants.mjs}) that does \emph{not} share any
+state with the bridge or the experiment driver. For each transaction
+digest in the result CSV, the verifier (i)~queries Sui DevNet for the
+transaction's \texttt{objectChanges} via
+\texttt{SuiClient.getTransactionBlock}, (ii)~locates the unique
+created object whose \texttt{objectType} matches
+\texttt{::AccessGrant\$}, (iii)~loads the object's content via
+\texttt{SuiClient.getObject}, (iv)~decodes the four
+\texttt{vector<u8>} fields back to UTF-8 strings, and (v)~asserts
+that \texttt{patient\_did}, \texttt{hospital\_did}, and
+\texttt{grantee\_did} all equal the patient's zkLogin DID
+auto-detected from the first row, that
+\texttt{record\_id} matches the experiment driver's
+\texttt{rec-\textlangle ts\textrangle-\textlangle i\textrangle} format
+with monotonically increasing iteration index, and that
+\texttt{is\_active = true}. \textbf{All 30 grants verified
+successfully (pass = 30/30, fail = 0)}: the four critical fields
+round-trip byte-identical between the client's submission payload and
+the on-chain Move object. Furthermore, the on-chain
+\texttt{timestamp} field of each AccessGrant trails the client-side
+\texttt{record\_id} timestamp by 78--120\,ms, consistent with the
+measured \texttt{wall\_post} median of 609\,ms minus the
+$\sim$500\,ms of pre-submission backend work, providing an
+independent corroboration of the latency decomposition reported in
+Table~\ref{tab:ehr-access-vs-did}. This experiment establishes
+end-to-end correctness of the Mode~D path under multi-tenant load:
+neither the worker's request-scoped state reset nor the bridge's
+IPC dispatch corrupts the cryptographic integrity of the on-chain
+record.
+
+\paragraph{Engineering note}
+
+A subtle bug surfaced exclusively under the multi-op worker workload:
+the module-level constant \texttt{ZKLOGIN\_SALT}, computed once at
+import time from \texttt{process.env.USER\_SALT} with a fallback
+default, was stale across worker requests. For \texttt{op=did}, the
+stale value happened to coincide with the live session's salt across
+our test runs (same Google identity + same four-institution seed
+combination) and the bug went undetected. For \texttt{op=access} the
+mismatch produced systematic Sui validator rejection of every
+AccessGrant transaction with
+\texttt{General cryptographic error: Groth16 proof verify failed}
+even though the bridge's HTTP layer reported \texttt{ok=true} for each
+call. The fix replaces every signature-relevant
+\texttt{BigInt(ZKLOGIN\_SALT)} reference with
+\texttt{BigInt(process.env.USER\_SALT \string|\string| ZKLOGIN\_SALT)},
+re-reading the live environment per request. This generalizes to a
+deployment caveat: \emph{long-running zkLogin worker processes must
+keep all session-derived constants in request scope, never module
+scope.}

@@ -1,0 +1,17 @@
+{
+  "did": "did:key:z6MksJTmdfo9dYRrxM6GRSEroNwd8HXyCmkKu6TNesNjvZGn",
+  "keys": [
+    {
+      "type": "Ed25519",
+      "kid": "bee6f5c9241145d7e43d28c2ac82ea1f18296d266b09315c994e4885e4f0c71b",
+      "publicKeyHex": "bee6f5c9241145d7e43d28c2ac82ea1f18296d266b09315c994e4885e4f0c71b",
+      "meta": {
+        "algorithms": [
+          "EdDSA",
+          "Ed25519"
+        ]
+      },
+      "kms": "local"
+    }
+  ]
+}

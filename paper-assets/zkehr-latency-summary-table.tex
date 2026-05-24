@@ -1,0 +1,30 @@
+% zkEHR end-to-end latency across the three evaluation axes.
+% Source CSVs (n=100 successful runs each, Sui Devnet via EC2 us-east-1):
+%   DID Creation        : zkehr-protocol-harness/verification-before-completion/
+%                         zkehr_protocol_establish_devnet.csv          (total_ms)
+%   Access Grant (cold) : zkehr-cross-institution-access/results/
+%                         zkehr_cross_institution_access_no_session_results.csv (total_ms)
+%   Access Grant (reuse): zkehr-cross-institution-access/results/
+%                         zkehr_cross_institution_access_results.csv    (total_ms)
+%   VC Presentation     : zkdidproof-presentation-latency/results/
+%                         zkdidproof_presentation_latency.csv           (total_ms)
+% Percentiles: numpy linear interpolation. std: sample (n-1).
+\begin{table}[htbp]
+\centering
+\caption{End-to-end zkEHR latency across the three evaluated operations
+($n=100$ successful runs each, Sui Devnet, AWS EC2 \texttt{us-east-1}).
+All values in milliseconds.}
+\label{tab:zkehr-latency-summary}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{l r r r r r}
+\toprule
+\textbf{Operation} & \textbf{mean} & \textbf{std} & \textbf{p90} & \textbf{p95} & \textbf{p99} \\
+\midrule
+DID creation (identity establishment)      & 3380.7 & 284.5 & 3750.6 & 3779.5 & 3859.7 \\
+Access grant, cross-institution (cold)     & 3553.3 & 356.3 & 3957.9 & 4003.7 & 4136.4 \\
+Access grant, cross-institution (reuse)    &  456.5 &  67.5 &  579.6 &  590.7 &  642.0 \\
+VC presentation (zkDIDProof)               & 1346.6 &  26.3 & 1366.9 & 1372.3 & 1401.7 \\
+\bottomrule
+\end{tabular}
+\end{table}

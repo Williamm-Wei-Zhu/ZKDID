@@ -1,0 +1,11 @@
+[package]
+name = "did_registry"
+edition = "2024"
+
+[dependencies]
+
+[addresses]
+did_registry = "0x0"
+
+[environments]
+devnet = "4fe43958"

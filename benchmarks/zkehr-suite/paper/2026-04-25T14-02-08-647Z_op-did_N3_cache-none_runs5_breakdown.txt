@@ -1,0 +1,207 @@
+
+==============================================================================
+DETAILED PER-RUN BREAKDOWN — 2026-04-25T14-02-08-647Z_op-did_N3_cache-none_runs5.csv
+  rows: 5   tag: fresh_5runs_2026-04-25
+  config: op=did, institutions=3, cache=none, warm=0
+==============================================================================
+
+──── Run 1/5 ──────────────────────────────────────────
+  status   : OK     digest: EeZ18dqWqdFcf6...
+  timestamp: 2026-04-25T14:02:09.573Z
+
+  BROWSER (auth.ts)  ─ pre-OAuth + post-OAuth (in user's browser)
+    epoch_fetch_ms                       34 ms    getLatestSuiSystemState (browser→Sui)
+    eph_key_ms                           27 ms    new Ed25519Keypair()
+    randomness_ms                         0 ms    generateRandomness() — 16 bytes
+    nonce_ms                              1 ms    Poseidon hash for OAuth nonce
+    oauth_rtt_ms                        671 ms    click Google → JWT back in URL
+    jwt_parse_ms                          1 ms    jwtDecode + sub/aud sanity
+    salt_ms                              17 ms    parallel /get-salt to 3 EC2 services
+    nonce_verify_ms                      31 ms    setupData.nonce == jwt.nonce
+    prover_ms                          2539 ms    browser → prover-dev.mystenlabs.com
+    save_account_ms                       0 ms    sessionStorage.setItem
+    bridge_post_ms                       25 ms    POST /zklogin-session (with ZK_PROOFS)
+
+  NODE (veramo-to-sui.js, spawned by bridge AFTER 'Create DID' click)
+    6.1-3 restore+nonce+addrSeed           N/A    restore eph key + verify nonce + addrSeed
+    6.1b JWK_precheck                    84 ms    verify JWT kid still in JWKS
+    6.4  request_Prover                   0 ms    (should be ~0 — uses preloaded zkProofs)
+    6.4b request_Faucet                   0 ms    DevNet faucet pre-flight
+    6.5  build_and_sign_Move_tx          41 ms    construct & sign Move call
+    6.6a assemble_zkLogin_signature       0 ms    wrap ed25519 sig with zkLogin envelope
+    6.6b submit_tx_and_return           238 ms    executeTransactionBlock → digest
+
+  WALL CLOCK (playwright observer)
+    wall_login_ms                      3890 ms    click Google → 'Logged in' toast
+    wall_submit_ms                     1370 ms    click Create DID → 'dispatched' toast
+    wall_total_ms                      5265 ms    = login + submit
+
+  GAS NET: 10836680 MIST   (gas computation+storage−rebate−nonrefundable)
+
+──── Run 2/5 ──────────────────────────────────────────
+  status   : OK     digest: CsySCGaRVC43XD...
+  timestamp: 2026-04-25T14:02:17.405Z
+
+  BROWSER (auth.ts)  ─ pre-OAuth + post-OAuth (in user's browser)
+    epoch_fetch_ms                       16 ms    getLatestSuiSystemState (browser→Sui)
+    eph_key_ms                           32 ms    new Ed25519Keypair()
+    randomness_ms                         0 ms    generateRandomness() — 16 bytes
+    nonce_ms                              1 ms    Poseidon hash for OAuth nonce
+    oauth_rtt_ms                        708 ms    click Google → JWT back in URL
+    jwt_parse_ms                          1 ms    jwtDecode + sub/aud sanity
+    salt_ms                              17 ms    parallel /get-salt to 3 EC2 services
+    nonce_verify_ms                      33 ms    setupData.nonce == jwt.nonce
+    prover_ms                          2508 ms    browser → prover-dev.mystenlabs.com
+    save_account_ms                       0 ms    sessionStorage.setItem
+    bridge_post_ms                       22 ms    POST /zklogin-session (with ZK_PROOFS)
+
+  NODE (veramo-to-sui.js, spawned by bridge AFTER 'Create DID' click)
+    6.1-3 restore+nonce+addrSeed           N/A    restore eph key + verify nonce + addrSeed
+    6.1b JWK_precheck                    91 ms    verify JWT kid still in JWKS
+    6.4  request_Prover                   0 ms    (should be ~0 — uses preloaded zkProofs)
+    6.4b request_Faucet                   0 ms    DevNet faucet pre-flight
+    6.5  build_and_sign_Move_tx          45 ms    construct & sign Move call
+    6.6a assemble_zkLogin_signature       0 ms    wrap ed25519 sig with zkLogin envelope
+    6.6b submit_tx_and_return           215 ms    executeTransactionBlock → digest
+
+  WALL CLOCK (playwright observer)
+    wall_login_ms                      3499 ms    click Google → 'Logged in' toast
+    wall_submit_ms                     1952 ms    click Create DID → 'dispatched' toast
+    wall_total_ms                      5455 ms    = login + submit
+
+  GAS NET: 10836680 MIST   (gas computation+storage−rebate−nonrefundable)
+
+──── Run 3/5 ──────────────────────────────────────────
+  status   : OK     digest: 8xrHQ1iRAnerRy...
+  timestamp: 2026-04-25T14:02:25.641Z
+
+  BROWSER (auth.ts)  ─ pre-OAuth + post-OAuth (in user's browser)
+    epoch_fetch_ms                       15 ms    getLatestSuiSystemState (browser→Sui)
+    eph_key_ms                           27 ms    new Ed25519Keypair()
+    randomness_ms                         0 ms    generateRandomness() — 16 bytes
+    nonce_ms                              1 ms    Poseidon hash for OAuth nonce
+    oauth_rtt_ms                        609 ms    click Google → JWT back in URL
+    jwt_parse_ms                          0 ms    jwtDecode + sub/aud sanity
+    salt_ms                              14 ms    parallel /get-salt to 3 EC2 services
+    nonce_verify_ms                      28 ms    setupData.nonce == jwt.nonce
+    prover_ms                          2520 ms    browser → prover-dev.mystenlabs.com
+    save_account_ms                       0 ms    sessionStorage.setItem
+    bridge_post_ms                       27 ms    POST /zklogin-session (with ZK_PROOFS)
+
+  NODE (veramo-to-sui.js, spawned by bridge AFTER 'Create DID' click)
+    6.1-3 restore+nonce+addrSeed           N/A    restore eph key + verify nonce + addrSeed
+    6.1b JWK_precheck                    92 ms    verify JWT kid still in JWKS
+    6.4  request_Prover                   0 ms    (should be ~0 — uses preloaded zkProofs)
+    6.4b request_Faucet                   0 ms    DevNet faucet pre-flight
+    6.5  build_and_sign_Move_tx          44 ms    construct & sign Move call
+    6.6a assemble_zkLogin_signature       0 ms    wrap ed25519 sig with zkLogin envelope
+    6.6b submit_tx_and_return           212 ms    executeTransactionBlock → digest
+
+  WALL CLOCK (playwright observer)
+    wall_login_ms                      3481 ms    click Google → 'Logged in' toast
+    wall_submit_ms                     1941 ms    click Create DID → 'dispatched' toast
+    wall_total_ms                      5426 ms    = login + submit
+
+  GAS NET: 10836680 MIST   (gas computation+storage−rebate−nonrefundable)
+
+──── Run 4/5 ──────────────────────────────────────────
+  status   : OK     digest: 35CbLmDkT8A1cq...
+  timestamp: 2026-04-25T14:02:33.833Z
+
+  BROWSER (auth.ts)  ─ pre-OAuth + post-OAuth (in user's browser)
+    epoch_fetch_ms                       15 ms    getLatestSuiSystemState (browser→Sui)
+    eph_key_ms                           26 ms    new Ed25519Keypair()
+    randomness_ms                         0 ms    generateRandomness() — 16 bytes
+    nonce_ms                              1 ms    Poseidon hash for OAuth nonce
+    oauth_rtt_ms                        654 ms    click Google → JWT back in URL
+    jwt_parse_ms                          1 ms    jwtDecode + sub/aud sanity
+    salt_ms                               9 ms    parallel /get-salt to 3 EC2 services
+    nonce_verify_ms                      27 ms    setupData.nonce == jwt.nonce
+    prover_ms                          2495 ms    browser → prover-dev.mystenlabs.com
+    save_account_ms                       0 ms    sessionStorage.setItem
+    bridge_post_ms                       23 ms    POST /zklogin-session (with ZK_PROOFS)
+
+  NODE (veramo-to-sui.js, spawned by bridge AFTER 'Create DID' click)
+    6.1-3 restore+nonce+addrSeed           N/A    restore eph key + verify nonce + addrSeed
+    6.1b JWK_precheck                    92 ms    verify JWT kid still in JWKS
+    6.4  request_Prover                   0 ms    (should be ~0 — uses preloaded zkProofs)
+    6.4b request_Faucet                   0 ms    DevNet faucet pre-flight
+    6.5  build_and_sign_Move_tx          44 ms    construct & sign Move call
+    6.6a assemble_zkLogin_signature       0 ms    wrap ed25519 sig with zkLogin envelope
+    6.6b submit_tx_and_return           304 ms    executeTransactionBlock → digest
+
+  WALL CLOCK (playwright observer)
+    wall_login_ms                      3434 ms    click Google → 'Logged in' toast
+    wall_submit_ms                     1960 ms    click Create DID → 'dispatched' toast
+    wall_total_ms                      5398 ms    = login + submit
+
+  GAS NET: 10836680 MIST   (gas computation+storage−rebate−nonrefundable)
+
+──── Run 5/5 ──────────────────────────────────────────
+  status   : OK     digest: EbeU93xWAKSn5r...
+  timestamp: 2026-04-25T14:02:42.007Z
+
+  BROWSER (auth.ts)  ─ pre-OAuth + post-OAuth (in user's browser)
+    epoch_fetch_ms                       18 ms    getLatestSuiSystemState (browser→Sui)
+    eph_key_ms                           30 ms    new Ed25519Keypair()
+    randomness_ms                         0 ms    generateRandomness() — 16 bytes
+    nonce_ms                              1 ms    Poseidon hash for OAuth nonce
+    oauth_rtt_ms                        692 ms    click Google → JWT back in URL
+    jwt_parse_ms                          1 ms    jwtDecode + sub/aud sanity
+    salt_ms                               9 ms    parallel /get-salt to 3 EC2 services
+    nonce_verify_ms                      32 ms    setupData.nonce == jwt.nonce
+    prover_ms                          2483 ms    browser → prover-dev.mystenlabs.com
+    save_account_ms                       0 ms    sessionStorage.setItem
+    bridge_post_ms                       21 ms    POST /zklogin-session (with ZK_PROOFS)
+
+  NODE (veramo-to-sui.js, spawned by bridge AFTER 'Create DID' click)
+    6.1-3 restore+nonce+addrSeed           N/A    restore eph key + verify nonce + addrSeed
+    6.1b JWK_precheck                    82 ms    verify JWT kid still in JWKS
+    6.4  request_Prover                   0 ms    (should be ~0 — uses preloaded zkProofs)
+    6.4b request_Faucet                   0 ms    DevNet faucet pre-flight
+    6.5  build_and_sign_Move_tx          41 ms    construct & sign Move call
+    6.6a assemble_zkLogin_signature       0 ms    wrap ed25519 sig with zkLogin envelope
+    6.6b submit_tx_and_return           292 ms    executeTransactionBlock → digest
+
+  WALL CLOCK (playwright observer)
+    wall_login_ms                      3400 ms    click Google → 'Logged in' toast
+    wall_submit_ms                     1996 ms    click Create DID → 'dispatched' toast
+    wall_total_ms                      5400 ms    = login + submit
+
+  GAS NET: 10836680 MIST   (gas computation+storage−rebate−nonrefundable)
+
+==============================================================================
+SUMMARY (N=5)
+==============================================================================
+
+  BROWSER phase                            stats (ms)
+  ----------------------------------       ------------------------------------
+  epoch_fetch_ms                           n=5  mean=   19  p50=   16  p95=   18  min=   15  max=   34
+  eph_key_ms                               n=5  mean=   28  p50=   27  p95=   30  min=   26  max=   32
+  randomness_ms                            n=5  mean=    0  p50=    0  p95=    0  min=    0  max=    0
+  nonce_ms                                 n=5  mean=    1  p50=    1  p95=    1  min=    1  max=    1
+  oauth_rtt_ms                             n=5  mean=  666  p50=  671  p95=  692  min=  609  max=  708
+  jwt_parse_ms                             n=5  mean=    0  p50=    1  p95=    1  min=    0  max=    1
+  salt_ms                                  n=5  mean=   13  p50=   14  p95=   17  min=    9  max=   17
+  nonce_verify_ms                          n=5  mean=   30  p50=   31  p95=   32  min=   27  max=   33
+  prover_ms          ⬅ ZK proof            n=5  mean= 2509  p50= 2508  p95= 2520  min= 2483  max= 2539
+  save_account_ms                          n=5  mean=    0  p50=    0  p95=    0  min=    0  max=    0
+  bridge_post_ms                           n=5  mean=   23  p50=   23  p95=   25  min=   21  max=   27
+
+  NODE (veramo-to-sui.js) phase            stats (ms)
+  ----------------------------------       ------------------------------------
+  6.1-3 restore+nonce+addrSeed                   N/A
+  6.1b JWK_precheck                        n=5  mean=   88  p50=   91  p95=   92  min=   82  max=   92
+  6.4  request_Prover (preloaded)          n=5  mean=    0  p50=    0  p95=    0  min=    0  max=    0
+  6.4b request_Faucet                      n=5  mean=    0  p50=    0  p95=    0  min=    0  max=    0
+  6.5  build_and_sign_Move_tx              n=5  mean=   43  p50=   44  p95=   44  min=   41  max=   45
+  6.6a assemble_zkLogin_signature          n=5  mean=    0  p50=    0  p95=    0  min=    0  max=    0
+  6.6b submit_tx_and_return                n=5  mean=  252  p50=  238  p95=  292  min=  212  max=  304
+
+  WALL CLOCK                               stats (ms)
+  ----------------------------------       ------------------------------------
+  wall_login_ms     (click→login)          n=5  mean= 3540  p50= 3481  p95= 3499  min= 3400  max= 3890
+  wall_submit_ms    (click→dispatched)     n=5  mean= 1843  p50= 1952  p95= 1960  min= 1370  max= 1996
+  wall_total_ms                            n=5  mean= 5388  p50= 5400  p95= 5426  min= 5265  max= 5455
+
+  GAS net (MIST):                          n=5  mean=10836680  p50=10836680  p95=10836680  min=10836680  max=10836680

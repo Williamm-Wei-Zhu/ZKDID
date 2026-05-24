@@ -1,0 +1,32 @@
+{
+  "name": "zkdidproof-presentation-latency",
+  "version": "1.0.0",
+  "description": "zkDIDProof end-to-end off-chain identity/credential presentation latency (Groth16 + OIDC, no blockchain access at verification) — zkEHR comparative evaluation",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "experiment:prelogin": "./run-in-dcv.sh prelogin",
+    "experiment:prime-token": "./run-in-dcv.sh prime-token",
+    "experiment:prime": "./run-in-dcv.sh prime",
+    "experiment:zkdidproof": "./run-in-dcv.sh zkdidproof",
+    "playwright:install": "playwright install --with-deps chromium"
+  },
+  "dependencies": {
+    "circomlibjs": "^0.1.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jose": "^5.9.6",
+    "playwright": "^1.49.0",
+    "snarkjs": "^0.7.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.17.6",
+    "typescript": "^5.6.3"
+  }
+}

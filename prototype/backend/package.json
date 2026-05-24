@@ -1,0 +1,36 @@
+{
+  "name": "zkdid",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "search:did": "node scripts/search-did.mjs",
+    "search:access": "node scripts/search-access.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@mysten/bcs": "^1.7.0",
+    "@mysten/sui.js": "^0.54.1",
+    "@mysten/zklogin": "^0.8.1",
+    "@veramo/cli": "^6.0.0",
+    "@veramo/core": "^6.0.0",
+    "@veramo/credential-w3c": "^6.0.0",
+    "@veramo/data-store-json": "^6.0.0",
+    "@veramo/did-manager": "^6.0.0",
+    "@veramo/did-provider-ethr": "^6.0.0",
+    "@veramo/did-provider-key": "^6.0.0",
+    "@veramo/did-resolver": "^6.0.0",
+    "@veramo/key-manager": "^6.0.0",
+    "@veramo/kms-local": "^6.0.0",
+    "axios": "^1.10.0",
+    "circomlibjs": "^0.1.7",
+    "did-resolver": "^4.1.0",
+    "ethers": "^6.14.4",
+    "ethr-did-registry": "^1.3.0",
+    "ethr-did-resolver": "^11.0.4"
+  }
+}

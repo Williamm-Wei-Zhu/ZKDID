@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+playwright-report/
+.playwright/
+.chrome-profile/
+session-cache.json
+results/*.csv
+verification-before-completion/*.csv
+verification-before-completion/*.json
+!results/.gitkeep

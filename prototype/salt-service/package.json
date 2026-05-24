@@ -1,0 +1,19 @@
+{
+  "name": "zkdid-salt-service",
+  "version": "1.0.0",
+  "description": "Institution-specific salt derivation service for zkDID Patient. Deploy one instance per institution.",
+  "private": true,
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "circomlibjs": "^0.1.7",
+    "express": "^4.19.2"
+  }
+}

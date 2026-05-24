@@ -1,0 +1,28 @@
+import { SuiClient } from '@mysten/sui/client';
+
+const PACKAGE_ID = '0x7bedaa0d575e7a15173efb2196663165fff354d670ca7bff0a49c74633f0dcde';
+
+async function main() {
+  console.log('Checking Package:', PACKAGE_ID);
+  const client = new SuiClient({ url: 'https://fullnode.devnet.sui.io' });
+  
+  try {
+    const pkg = await client.getObject({ 
+      id: PACKAGE_ID, 
+      options: { showType: true, showContent: true } 
+    });
+    
+    if (pkg.data) {
+      console.log('✅ Package exists');
+      console.log('Type:', pkg.data.type);
+    } else if (pkg.error) {
+      console.log('❌ Package does not exist:', pkg.error.code);
+    }
+  } catch (e) {
+    console.log('Error:', e.message);
+  }
+  
+  process.exit(0);
+}
+
+main();

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.local
+.chrome-profile/
+data/sessions.json
+results/*.csv
+verification-before-completion/*.csv
+verification-before-completion/*.json
+*.log
+!results/.gitkeep
+!data/.gitkeep
